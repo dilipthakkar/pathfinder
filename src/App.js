@@ -16,6 +16,14 @@ function App() {
   
   return (
     <div className="App">
+      <header>
+        <div className="header--btn">
+        
+        </div>
+        <div className="header--info">
+
+        </div>
+      </header>
       <div className="grid">
         <Board />
       </div>

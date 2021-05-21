@@ -1,36 +1,51 @@
 import React, { useEffect, useState } from 'react'
 import Node from '../Node/node';
-import { creategrid, CreateWall, MouseDown, MouseEnter, Mouseup, resetGird } from './boardsUtil';
+import { createBoard, creategrid, CreateWall, MouseDown, MouseEnter, Mouseup, resetGird } from './boardsUtil';
 import "./board.css"
 import { ratinMaze } from '../../algorithms/rat_in_a_maze';
 import { v4} from "uuid"
+import { bfs } from '../../algorithms/bfs';
+import { greedyBfs } from "../../algorithms/greedyBfs";
 
 const Board = () => {
-    const [grid, setGrid] = useState([]);
-    const [board , setBorad] = useState({});
-    const [MousePressed , SetMousePressed] = useState(false);
-    const [changeIsStart , setChangeIsStart] = useState(false);
-
+    const [board , setBoard] = useState({});
+    
     useEffect(() => {
-        creategrid(setGrid);
+      let Board = createBoard();
+      console.log(Board);
+        setBoard(Board);
     }, []);
 
+
     const StartFinding = ()=>{
-        resetGird(grid , setGrid);
-        ratinMaze(grid, 10, 10, grid.length , grid[1].length, setGrid);
+        resetGird(board , setBoard);
+        ratinMaze(board.grid, board.startPoint.x,board.startPoint.y, board.grid.length , board.grid[1].length, setGrid , board.endPoint.x , board.endPoint.y);
+    }
+    const BfsSearch = ()=>{
+      resetGird(board , setBoard);
+      bfs(board.grid, board.startPoint.x,board.startPoint.y, board.endPoint.x , board.endPoint.y, setBoard , board , setGrid);
+  }
+  const greedy = ()=>{
+    resetGird(board , setBoard);
+    greedyBfs(board.grid ,  board.startPoint.x,board.startPoint.y ,  board.endPoint.x , board.endPoint.y , setBoard , board , setGrid);
+  }
+  
+
+    const setGrid = (grid)=>{
+      setBoard({...board , grid : grid});
     }
     
     
     return (
         <div>
          <div className="grid">
-        {grid.map((row) => (
+        {board.grid && board.grid.map((row) => (
           <div className="grid--row" >
             {row.map((nodes) => (
               <div className="grid--node" 
-               onMouseDown = {()=>MouseDown(nodes.x,nodes.y , SetMousePressed , setGrid , grid , changeIsStart, setChangeIsStart)}
-               onMouseEnter = {()=>MouseEnter(nodes.x,nodes.y , MousePressed , setGrid , grid , changeIsStart, setChangeIsStart)}
-               onMouseUp = {()=>Mouseup(nodes.x, nodes.y , SetMousePressed , setGrid ,grid ,changeIsStart, setChangeIsStart)}
+               onMouseDown = {()=>MouseDown(nodes.x,nodes.y , board , setBoard)}
+               onMouseEnter = {()=>MouseEnter(nodes.x,nodes.y ,  board , setBoard)}
+               onMouseUp = {()=>Mouseup(nodes.x, nodes.y , board , setBoard)}
               >
                 <Node visited={nodes.visited} value={nodes.value} node={nodes}/>
               </div>
@@ -38,7 +53,9 @@ const Board = () => {
           </div>
         ))}
       </div>
-        <button onClick={StartFinding}>click</button>
+        <button disabled={board.isSearching} onClick={StartFinding}>click</button>
+        <button disabled={board.isSearching} onClick={BfsSearch}>click</button>
+        <button disabled={board.isSearching} onClick={greedy}>click</button>
        
         </div>
     )

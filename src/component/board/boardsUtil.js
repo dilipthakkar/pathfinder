@@ -8,8 +8,9 @@ function NewNode(i, j) {
     this.visited = 0;
     this.isStart = 0;
     this.isEnd = 0;
+    this.neighbours = [{x:i-1 , y: j},{x:i , y: j-1},{x:i+1 , y: j},{x:i , y: j+1}]
   }
-function Borad(){
+function Board(){
   this.grid = creategrid();
   this.startPoint = {
     x : 0,
@@ -17,14 +18,25 @@ function Borad(){
   };
   this.endPoint = {
     x : this.grid.length - 1,
-    y : this.grid.length - 1
+    y : this.grid[0].length - 1
   } ;
   this.mousepressed = false ;
   this.changingStart = false;
   this.changingEnd = false ;
+  this.isSearching = false;
+  this.shortestPath = [];
+  this.constructShortestPath = async function(setGrid){
+    for(let i=0;i<this.shortestPath.length ; i++){
+      await new Promise(done=>setTimeout(() => {
+        done();
+      }, 3))
+      this.grid[this.shortestPath[i].x][this.shortestPath[i].y].value = 3;
+      setGrid(this.grid);
+    }
+  }
 }
 
-export const creategrid = (setGrid) => {
+export const creategrid = () => {
     const arr = [];
     for (let i = 0; i < row; i++) {
       const arrI = [];
@@ -40,67 +52,101 @@ export const creategrid = (setGrid) => {
     return arr;
   };
 
-export const CreateWall = (i,j,setGrid , grid)=>{
-    const arr = [...grid];
-    arr[i][j].value = 0;
-    setGrid(arr);
-  }
+export const createBoard = ()=>{
+  return new Board();
+} 
 
-
-  export const MouseDown = (i , j , mousePress , setGrid , grid,changeIsStart, setChangeIsStart)=>{
-    mousePress(true);
-    if(grid[i][j].isStart){
-        setChangeIsStart(true);
-        // grid[i][j].isStart = false;
-    }
-    else if(!grid[i][j].isStart && !grid[i][j].isEnd){
-        toggleWallandSetGrid(grid , setGrid , i , j);
-
-    }
-    
-  }
-  export const MouseEnter = (i,j,IsmousePressed , setGrid , grid,changeIsStart, setChangeIsStart)=>{
-    if(IsmousePressed){
-        if(changeIsStart){
-            console.log("jii");
-            makestart(grid , setGrid , i , j);   
-        }else{
-    toggleWallandSetGrid(grid , setGrid , i , j);
-
-        }
-    } 
-  }
-  
-  export const Mouseup = (i,j , mousePress,setGrid , grid , changeIsStart, setChangeIsStart)=>{
-      setChangeIsStart(false);
-    mousePress(false);
-  
-  }
-  
-  const toggleWallandSetGrid = (grid , setGrid , i , j) =>{
-    grid[i][j].value = !grid[i][j].value;
-    const copyGrid = [...grid];
-    setGrid(copyGrid);
-  }
-
-  const makestart = (grid , setGrid , i , j)=>{
+  const ChnageStart = (board , setBoard , i , j)=>{
+    let grid = board.grid;
       for(let k=0;k<grid.length ; k++){
           for(let m=0;m<grid[k].length ; m++){
               grid[k][m].isStart = false;
           }
       }
       grid[i][j].isStart = true;
-        const copyGrid = [...grid];
-      setGrid(copyGrid);
+      board.startPoint.x = i ;
+      board.startPoint.y = j;
+      board.grid = grid;
+      setBoard({...board});
         
   }
 
-  export const resetGird = (grid , setGrid)=>{
+  const ChangeEnd = (board , setBoard , i , j)=>{
+    let grid = board.grid;
+      for(let k=0;k<grid.length ; k++){
+          for(let m=0;m<grid[k].length ; m++){
+              grid[k][m].isEnd = false;
+          }
+      }
+      grid[i][j].isEnd = true;
+      board.endPoint.x = i ;
+      board.endPoint.y = j;
+      board.grid = grid;
+      setBoard({...board});
+        
+  }
+
+  export const resetGird = (board , setBorad)=>{
+    let grid = board.grid;
     for(let k=0;k<grid.length ; k++){
         for(let m=0;m<grid[k].length ; m++){
             grid[k][m].visited = false;
+            if(grid[k][m].value==3) grid[k][m].value=1;
         }
     }
-    const copyGrid = [...grid];
-    setGrid(copyGrid);
+    board.grid = grid;
+    setBorad({...board});
   }
+
+
+  export const MouseDown = (i , j ,board , setBoard)=>{
+    if(board.isSearching) return ;
+    let grid = board.grid ;
+    board.mousepressed = true;
+    if(grid[i][j].isStart){
+        board.changingStart = true;
+        setBoard({...board});
+    }else if(grid[i][j].isEnd){
+      board.changingEnd = true;
+      setBoard({...board});
+  }
+    else if(!grid[i][j].isStart && !grid[i][j].isEnd){
+        toggleWallandSetGrid(i , j , board , setBoard);
+
+    }
+    
+  }
+
+  const toggleWallandSetGrid = ( i , j,board , setBoard ) =>{
+    let grid = board.grid
+    grid[i][j].value = !grid[i][j].value;
+    console.log(board.grid);
+    setBoard({...board});
+  }
+
+  export const MouseEnter = (i,j,board , setBoard)=>{
+    if(board.isSearching) return ;
+
+    if(board.mousepressed){
+        if(board.changingStart){
+            ChnageStart(board , setBoard, i , j);   
+        }else if(board.changingEnd){
+          ChangeEnd(board , setBoard, i , j);   
+      }else{
+    toggleWallandSetGrid(i , j , board , setBoard);
+
+        }
+    } 
+  }
+
+  export const Mouseup = (i,j , board , setBoard)=>{
+    if(board.isSearching) return ;
+
+    board.mousepressed = false;
+    board.changingStart = false;
+    board.changingEnd = false;
+    setBoard({...board});
+  
+
+}
+

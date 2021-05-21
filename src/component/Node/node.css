@@ -2,70 +2,80 @@
     width: 30px;
     height: 30px;
     display: block;
-    border: 0.1px solid black;
+    border: 0.1px solid cadetblue;
 }
 .visitednode{
-    background-color: rosybrown;
-    animation: animation1 0.5s ease;
+    background-color: skyblue;
+    animation: animation1 2s ease;
+}
+.shortest--path--node{
+    background-color:yellow;
+    
+    border: yellow 0.1px solid;
+    animation: animation2 1s ease-in;
 }
 .wallnode{
     background-color: black;
-    /* background-image: url("../../assests/brickwall.jpg");
-    background-repeat: no-repeat;
-    background-size:cover; */
+    border: 0.1px solid black;
+    animation: wallnode-animation 0.3s;
 }
 .start--node{
-    background-color: seagreen;
-    /* animation: animation2 infinite 0.5s; */
+    background-image: url('../../assests/icons8-next-page-80.png');
+    background-size:cover;
+    border: white solid 0.1px;
+    animation: animation2 1s;
 }
 .end--node{
-    background-color: teal;
-    /* animation: animation2 infinite 0.5s; */
+    background-image: url('../../assests/monster2.png');
+    background-size:cover;
+    border: white solid 0.1px;
+    animation: animation2 1s;
 }
 
 @keyframes animation1{
     0%{
         background-color: cornsilk;
-        border-radius: 100%;
+        border-radius: 25%;
     }
     30%{
-        background-color:rebeccapurple;
-        border-radius: 75%;
+        background-color:mediumslateblue;
+
+        
+        border-radius: 20%;
 
     }
     60%{
-        background-color:  purple;
-        border-radius: 50%;
+        background-color:dodgerblue;
+
+        border-radius: 15%;
 
     }
     100%{
-        background-color:rosybrown;
+        background-color:deepskyblue;
+
         border-radius: 0%;
 
     }
 }
 
 
+
 @keyframes animation2{
-    0%{
-        border-radius: 100%;
-        background-color: turquoise;
-    }
-    30%{
-        border-radius: 75%;
-        background-color:violet;
+    from {
+		transform: scale(0.3);
+	}
+	to {
+		transform: scale(1);
+	}
+    
+}
 
 
-    }
-    60%{
-        border-radius: 50%;
-        background-color:springgreen;
-
-    }
-    100%{
-        border-radius: 0%;
-        background-color:darkgreen;
-
-
-    }
+@keyframes wallnode-animation{
+    from {
+		transform: scale(0.6);
+	}
+	to {
+		transform: scale(1);
+	}
 }

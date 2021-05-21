@@ -9,8 +9,11 @@ const Node = ({visited,value,node}) => {
         if(node.isEnd==1){
             return `${mainClass} end--node`
         }
-        if(value==0){
+        if(value==0 || value == false){
             return `${mainClass} wallnode`
+        }
+        if(value==3){
+            return `${mainClass} shortest--path--node`
         }
         if(visited){
             return `${mainClass} visitednode` ;
