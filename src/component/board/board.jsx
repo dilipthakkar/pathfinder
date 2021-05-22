@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import Node from "../Node/node";
 import {
   createBoard,
-  creategrid,
-  CreateWall,
+  emptyGird,
   MouseDown,
   MouseEnter,
   Mouseup,
@@ -11,10 +10,15 @@ import {
 } from "./boardsUtil";
 import "./board.css";
 import { ratinMaze } from "../../algorithms/rat_in_a_maze";
-import { v4 } from "uuid";
 import { bfs } from "../../algorithms/bfs";
 import { greedyBfs } from "../../algorithms/greedyBfs";
 import { connect } from "react-redux";
+
+import HeaderImage from "../../assests/image1.png";
+import PlayBtn from "../../assests/play.png";
+import MonsterLogo from "../../assests/monster.png";
+import StartLogo from "../../assests/start.png";
+import SelectAlgoritm from "../SelectAlgorithm/SelectAlgoritm";
 
 const Board = (props) => {
   const [board, setBoard] = useState({});
@@ -37,7 +41,8 @@ const Board = (props) => {
         board.grid[1].length,
         setGrid,
         board.endPoint.x,
-        board.endPoint.y
+        board.endPoint.y,
+        setBoard,board
       );
     } else if (algorithm == "breadth first search") {
       bfs(
@@ -64,52 +69,79 @@ const Board = (props) => {
     }
   };
 
-  const StartFinding = () => {
-    resetGird(board, setBoard);
-    ratinMaze(
-      board.grid,
-      board.startPoint.x,
-      board.startPoint.y,
-      board.grid.length,
-      board.grid[1].length,
-      setGrid,
-      board.endPoint.x,
-      board.endPoint.y
-    );
-  };
-  const BfsSearch = () => {
-    resetGird(board, setBoard);
-    bfs(
-      board.grid,
-      board.startPoint.x,
-      board.startPoint.y,
-      board.endPoint.x,
-      board.endPoint.y,
-      setBoard,
-      board,
-      setGrid
-    );
-  };
-  const greedy = () => {
-    resetGird(board, setBoard);
-    greedyBfs(
-      board.grid,
-      board.startPoint.x,
-      board.startPoint.y,
-      board.endPoint.x,
-      board.endPoint.y,
-      setBoard,
-      board,
-      setGrid
-    );
-  };
+  
 
   const setGrid = (grid) => {
     setBoard({ ...board, grid: grid });
   };
-
   return (
     <div>
+      { /* header  of app */}
+      <div className="header--main--container">
+        <img src={HeaderImage} style={{ height: "100%", width: "100%" }} />
+        <div className="header--btn">
+          <img src={MonsterLogo} className="monster--logo" />
+          <div className="header-btn-btn-group">
+            
+            <div className="header-btn-btn header-bnt-select">
+              {" "}
+              <SelectAlgoritm disable={board.isSearching} />{" "}
+            </div>
+    
+            <button className="header-btn-btn reset--grid-btn" onClick={()=>emptyGird(board, setBoard)} disabled={board.isSearching}>reset grid</button>
+            <div className="header-btn-btn header-bnt-select reset--grid-btn">monster</div>
+            <button
+              className="header-btn-btn play--btn"
+              onClick={StartFindingPath}
+              disabled={board.isSearching}
+            >
+              <img src={PlayBtn} />
+            </button>
+          </div>
+        </div>
+
+        <div className="header--info">
+          <div className="header--info--section">
+            <div className="header--info--section--text">visited</div>
+            <div
+              className="header--info--section--block"
+              style={{ backgroundColor: "skyblue" }}
+            ></div>
+            <div
+              className="header--info--section--block"
+              style={{ backgroundColor: "mediumslateblue" }}
+            ></div>
+          </div>
+          <div className="header--info--section">
+            <div className="header--info--section--text">start</div>
+            <div
+              className="header--info--section--block"
+              style={{
+                backgroundImage: `url(` + StartLogo + `)`,
+                backgroundSize: "cover",
+                marginTop: "5px",
+              }}
+            ></div>
+          </div>
+          <div className="header--info--section">
+            <div className="header--info--section--text">shortest path</div>
+            <div
+              className="header--info--section--block"
+              style={{ backgroundColor: "yellow" }}
+            ></div>
+          </div>
+
+          <div className="header--info--section">
+            <div className="header--info--section--text">Wall</div>
+            <div
+              className="header--info--section--block"
+              style={{ backgroundColor: "black" }}
+            ></div>
+          </div>
+        </div>
+      </div>
+
+              {/** board grid of app */}
       <div className="grid">
         {board.grid &&
           board.grid.map((row) => (
@@ -135,15 +167,7 @@ const Board = (props) => {
             </div>
           ))}
       </div>
-      <button disabled={board.isSearching} onClick={StartFinding}>
-        click
-      </button>
-      <button disabled={board.isSearching} onClick={BfsSearch}>
-        click
-      </button>
-      <button disabled={board.isSearching} onClick={greedy}>
-        click
-      </button>
+      
     </div>
   );
 };

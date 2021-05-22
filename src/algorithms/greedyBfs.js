@@ -11,6 +11,8 @@ const mahantanDistance = (targetnode ,currnode) =>{
 
 export const greedyBfs = async(arr , startX , startY , endX , endY ,setBoard , board , setGrid) =>{
     // const arr = board.grid;
+    board.isSearching = true;
+    setBoard({...board});
     const queue = [];
     const closed = [];
     const parent = [];

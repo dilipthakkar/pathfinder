@@ -23,7 +23,7 @@ const Node = ({visited,value,node}) => {
         }
     }
     return (
-        <div className={classes()}>
+        <div className={classes()} >
             
         </div>
     )

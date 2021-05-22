@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { changeAlgo } from '../../redux/algoselecter/action';
 import "./SelectAlgorithm.css";
@@ -9,7 +9,7 @@ const useStyle = makeStyles({
         backgroundColor : "teal",
         margin : 0,
         padding : 0,
-        width : "100%"
+        width : "100%",
     },
     closeHeading : {
         backgroundColor : "white",
@@ -31,6 +31,7 @@ const SelectAlgoritm = (props) => {
         "A star"
     ]);
     const onOpen = (event)=>{
+        if(!props.disable)
         setOpen(!open);
     }
     const onSelect =name=> (event)=>{
@@ -40,10 +41,11 @@ const SelectAlgoritm = (props) => {
         setOpen(!open);
     }
     
+    
 
     return (
         <div className="select--main">
-            <div onClick={onOpen}  className={open ? classes.openHeading : classes.closeHeading}>{selectedalgo || "Algorithm"}</div>
+            <div onClick={onOpen} className={open ? "select--main--heading--open select--main--heading" : "select--main--heading--close select--main--heading"}>{selectedalgo || "Algorithm"}</div>
             {open && options?.map(option=>(
                 <ul className="select--ul" onClick={onSelect(option)}>{option}</ul>
             ))}

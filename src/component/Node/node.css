@@ -1,8 +1,11 @@
 .Node--node{
-    width: 30px;
-    height: 30px;
+    /* width: 30px;
+    height: 30px; */
+    width: calc(95vw/50);
+    height: calc(95vw/50);
+    
     display: block;
-    border: 0.1px solid cadetblue;
+    border: 0.001vw solid cadetblue;
 }
 .visitednode{
     background-color: skyblue;
@@ -16,19 +19,19 @@
 }
 .wallnode{
     background-color: black;
-    border: 0.1px solid black;
+    border: 0.001vw solid black;
     animation: wallnode-animation 0.3s;
 }
 .start--node{
     background-image: url('../../assests/start.png');
     background-size:cover;
-    border: white solid 0.1px;
+    border: white solid 0.001vw;
     animation: animation2 1s;
 }
 .end--node{
     background-image: url('../../assests/monster2.png');
     background-size:cover;
-    border: white solid 0.1px;
+    border: white solid 0.001vw;
     animation: animation2 1s;
 }
 

@@ -8,7 +8,16 @@
     flex-direction: column;
     padding: 10px;
     border-radius: 10%;
+
 }
+
+.select--main:hover{
+    background-color:rgb(33, 192, 102);
+}
+.select--main:hover .select--main--heading{
+    background-color:rgb(33, 192, 102) ;
+}
+
 .select--main ul{
     font-size: 20px;
     width: 100%;
@@ -19,6 +28,33 @@
     background-color:teal;
     
 }
-.select--heading{
 
+.select--main--heading--open{
+    background-color: teal;
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+
+.select--main--heading--close{
+    background-color:white;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+@media screen and (max-width: 670px){
+    .select--main{
+        padding: 5px;
+    
+    }
+    
+    .select--main ul{
+        font-size: 10px;
+    }
+    
+    
+    
+        
 }

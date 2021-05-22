@@ -98,6 +98,20 @@ export const createBoard = ()=>{
     setBorad({...board});
   }
 
+  export const emptyGird = (board , setBorad)=>{
+    
+    let grid = board.grid;
+    for(let k=0;k<grid.length ; k++){
+        for(let m=0;m<grid[k].length ; m++){
+            grid[k][m].visited = false;
+            grid[k][m].value=1;
+        }
+    }
+    board.grid = grid;
+    setBorad({...board});
+  }
+
+
 
   export const MouseDown = (i , j ,board , setBoard)=>{
     if(board.isSearching) return ;
