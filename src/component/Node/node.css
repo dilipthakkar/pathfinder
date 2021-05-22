@@ -20,7 +20,7 @@
     animation: wallnode-animation 0.3s;
 }
 .start--node{
-    background-image: url('../../assests/icons8-next-page-80.png');
+    background-image: url('../../assests/start.png');
     background-size:cover;
     border: white solid 0.1px;
     animation: animation2 1s;

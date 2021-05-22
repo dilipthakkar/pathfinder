@@ -1,8 +1,20 @@
-
 .App{
   width: 100vw;
-  height: 100vh;
+  height: fit-content;
+  display: flex;
+ 
+  flex-direction: column;
+  justify-content: center;
+}
+header{
+  width: 100vw;
+}
+
+
+.grid{
+  width: 100vw;
+  max-height: 83vh;
+  padding: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
 }
