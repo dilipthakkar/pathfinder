@@ -44,7 +44,7 @@
     width: 100%;
 }
 
-@media screen and (max-width: 670px){
+@media screen and (max-width: 1300px){
     .select--main{
         padding: 5px;
     
@@ -52,9 +52,5 @@
     
     .select--main ul{
         font-size: 10px;
-    }
-    
-    
-    
-        
+    }       
 }

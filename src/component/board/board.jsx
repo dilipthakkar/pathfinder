@@ -19,6 +19,8 @@ import PlayBtn from "../../assests/play.png";
 import MonsterLogo from "../../assests/monster.png";
 import StartLogo from "../../assests/start.png";
 import SelectAlgoritm from "../SelectAlgorithm/SelectAlgoritm";
+import { Astar } from "../../algorithms/astar";
+import { dfs } from "../../algorithms/dfs";
 
 const Board = (props) => {
   const [board, setBoard] = useState({});
@@ -66,6 +68,25 @@ const Board = (props) => {
         board,
         setGrid
       );
+    } else if(algorithm == "A star"){
+      Astar(board.grid,
+        board.startPoint.x,
+        board.startPoint.y,
+        board.endPoint.x,
+        board.endPoint.y,
+        setBoard,
+        board,
+        setGrid)
+    }
+    else if(algorithm == "depth first search"){
+      dfs(board.grid,
+        board.startPoint.x,
+        board.startPoint.y,
+        board.endPoint.x,
+        board.endPoint.y,
+        setBoard,
+        board,
+        setGrid)
     }
   };
 
@@ -135,7 +156,7 @@ const Board = (props) => {
             <div className="header--info--section--text">Wall</div>
             <div
               className="header--info--section--block"
-              style={{ backgroundColor: "black" }}
+              style={{ backgroundColor: "rgb(3, 41, 66)" }}
             ></div>
           </div>
         </div>

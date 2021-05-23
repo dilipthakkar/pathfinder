@@ -4,6 +4,9 @@
 .grid {
   display: flex;
   flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
 }
 
 .header--main--container {
@@ -161,7 +164,6 @@
   .grid {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
   }
 

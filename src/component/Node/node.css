@@ -1,8 +1,8 @@
 .Node--node{
     /* width: 30px;
     height: 30px; */
-    width: calc(95vw/50);
-    height: calc(95vw/50);
+    width: calc(90vw/50);
+    height: calc(90vw/50);
     
     display: block;
     border: 0.001vw solid cadetblue;
@@ -18,9 +18,9 @@
     animation: animation2 1s ease-in;
 }
 .wallnode{
-    background-color: black;
-    border: 0.001vw solid black;
-    animation: wallnode-animation 0.3s;
+    background-color: rgb(3, 41, 66);
+    border: 0.001vw solid rgb(3, 41, 66);
+    animation: wallnode-animation 0.2s;
 }
 .start--node{
     background-image: url('../../assests/start.png');

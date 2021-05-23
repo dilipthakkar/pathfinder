@@ -20,9 +20,7 @@ function App() {
   
   return (
     <div className="App">
-      <div className="grid">
-        <Board />
-      </div>
+          <Board />
     </div>
   );
 }
